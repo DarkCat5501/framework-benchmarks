@@ -10,7 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const SERVERS = {
   hyperin: { port: 3000, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'node' },
   koa: { port: 3001, script: join(__dirname, '..', 'servers', 'koa-server.js'), runtime: 'node' },
-  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'bun' }
+  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'bun' },
+  ultimate: { port: 3003, script: join(__dirname, '..', 'servers', 'ultimate-server.js'), runtime: 'node' }
 }
 
 const config = { duration: 10, connections: 100, pipelining: 1 }
@@ -132,7 +133,7 @@ async function main() {
   const sizes = ['small', 'medium', 'large', 'x-large']
   
   console.log('='.repeat(60))
-  console.log('BENCHMARK: Hyperin vs Koa vs Elysia - Multiple Payload Sizes')
+  console.log('BENCHMARK: Hyperin vs Koa vs Elysia vs Ultimate - Multiple Payload Sizes')
   console.log('='.repeat(60))
   
   const results = {}
@@ -140,7 +141,7 @@ async function main() {
   for (const size of sizes) {
     results[size] = {}
     
-    for (const framework of ['hyperin', 'koa', 'elysia']) {
+    for (const framework of ['hyperin', 'koa', 'elysia', 'ultimate']) {
       if (target && target !== framework) continue
       
       console.log(`\n--- ${framework.toUpperCase()} - ${size} ---`)
@@ -166,7 +167,7 @@ async function main() {
   console.log('|--------------|-----------|---------|-------|------|--------|--------|')
   
   for (const size of sizes) {
-    for (const fw of ['hyperin', 'koa', 'elysia']) {
+    for (const fw of ['hyperin', 'koa', 'elysia', 'ultimate']) {
       if (results[size][fw]) {
         const r = results[size][fw]
         console.log(`| ${size.padStart(12)} | ${fw.padStart(9)} | ${r.reqPerSec.toString().padStart(7)} | ${r.latencyP50.toString().padStart(5)} | ${r.latencyP99.toString().padStart(4)} | ${r.cpuLoad.toString().padStart(6)}% | ${r.memory.rss.toString().padStart(6)}% |`)
