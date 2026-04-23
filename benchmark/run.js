@@ -7,12 +7,21 @@ import { getPayload, getPayloadSizes, processData } from '../shared/payload.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const SERVERS = {
+const ALL_SERVERS = {
+  node: { port: 3004, script: join(__dirname, '..', 'servers', 'node-server.js'), runtime: 'node' },
   hyperin: { port: 3000, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'node' },
   koa: { port: 3001, script: join(__dirname, '..', 'servers', 'koa-server.js'), runtime: 'node' },
   elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'node' },
   ultimate: { port: 3003, script: join(__dirname, '..', 'servers', 'ultimate-server.js'), runtime: 'node' }
 }
+
+const FRAMEWORKS = process.env.FRAMEWORKS 
+  ? process.env.FRAMEWORKS.split(',').map(f => f.trim())
+  : Object.keys(ALL_SERVERS)
+
+const SERVERS = Object.fromEntries(
+  Object.entries(ALL_SERVERS).filter(([key]) => FRAMEWORKS.includes(key))
+)
 
 const config = { duration: 10, connections: 100, pipelining: 1 }
 
@@ -133,7 +142,7 @@ async function main() {
   const sizes = ['small', 'medium', 'large', 'xlarge']
   
   console.log('='.repeat(60))
-  console.log('BENCHMARK: Hyperin vs Koa vs Elysia vs Ultimate - Multiple Payload Sizes')
+  console.log(`BENCHMARK: ${FRAMEWORKS.join(' vs ')} - Multiple Payload Sizes`)
   console.log('='.repeat(60))
   
   const results = {}
@@ -141,7 +150,7 @@ async function main() {
   for (const size of sizes) {
     results[size] = {}
     
-    for (const framework of ['hyperin', 'koa', 'elysia', 'ultimate']) {
+    for (const framework of FRAMEWORKS) {
       if (target && target !== framework) continue
       
       console.log(`\n--- ${framework.toUpperCase()} - ${size} ---`)
@@ -167,7 +176,7 @@ async function main() {
   console.log('|--------------|-----------|---------|-------|------|--------|--------|')
   
   for (const size of sizes) {
-    for (const fw of ['hyperin', 'koa', 'elysia', 'ultimate']) {
+    for (const fw of FRAMEWORKS) {
       if (results[size][fw]) {
         const r = results[size][fw]
         console.log(`| ${size.padStart(12)} | ${fw.padStart(9)} | ${r.reqPerSec.toString().padStart(7)} | ${r.latencyP50.toString().padStart(5)} | ${r.latencyP99.toString().padStart(4)} | ${r.cpuLoad.toString().padStart(6)}% | ${r.memory.rss.toString().padStart(6)}% |`)

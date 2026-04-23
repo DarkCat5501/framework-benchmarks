@@ -1,7 +1,6 @@
 import hyperin from 'hyperin'
 import { compress, json } from 'hyperin/middleware'
 import { processData, getPayload } from '../shared/payload.js'
-import os from 'os'
 
 const app = hyperin()
 
