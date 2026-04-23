@@ -8,6 +8,7 @@
     "bench:koa": "node benchmark/run.js koa"
   },
   "dependencies": {
+    "@elysiajs/node": "^1.4.5",
     "@koa/router": "^15.4.0",
     "elysia": "^1.4.28",
     "hyperin": "^0.0.1-beta.9",
