@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const SERVERS = {
   hyperin: { port: 3000, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'node' },
   koa: { port: 3001, script: join(__dirname, '..', 'servers', 'koa-server.js'), runtime: 'node' },
-  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'bun' },
+  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'node' },
   ultimate: { port: 3003, script: join(__dirname, '..', 'servers', 'ultimate-server.js'), runtime: 'node' }
 }
 
@@ -130,7 +130,7 @@ async function runBenchmark(type, payloadSize) {
 async function main() {
   const args = process.argv.slice(2)
   const target = args[0]
-  const sizes = ['small', 'medium', 'large', 'x-large']
+  const sizes = ['small', 'medium', 'large', 'xlarge']
   
   console.log('='.repeat(60))
   console.log('BENCHMARK: Hyperin vs Koa vs Elysia vs Ultimate - Multiple Payload Sizes')
