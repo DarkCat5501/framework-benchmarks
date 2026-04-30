@@ -11,13 +11,19 @@ const ALL_SERVERS = {
   node: { port: 3004, script: join(__dirname, '..', 'servers', 'node-server.js'), runtime: 'node' },
   hyperin: { port: 3000, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'node' },
   koa: { port: 3001, script: join(__dirname, '..', 'servers', 'koa-server.js'), runtime: 'node' },
-  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'node' },
-  ultimate: { port: 3003, script: join(__dirname, '..', 'servers', 'ultimate-server.js'), runtime: 'node' }
+  elysia: { port: 3002, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'bun' },
+  ultimate: { port: 3003, script: join(__dirname, '..', 'servers', 'ultimate-server.js'), runtime: 'node' },
+  fastify: { port: 3005, script: join(__dirname, '..', 'servers', 'fastify-server.js'), runtime: 'node' }
 }
 
-const FRAMEWORKS = process.env.FRAMEWORKS 
+const FRAMEWORKS = process.env.FRAMEWORKS
   ? process.env.FRAMEWORKS.split(',').map(f => f.trim())
   : Object.keys(ALL_SERVERS)
+
+
+const SIZES = process.env.SIZES
+  ? process.env.SIZES.split(",").map(f => f.trim())
+  : ['small', 'medium', 'large', 'xlarge']
 
 const SERVERS = Object.fromEntries(
   Object.entries(ALL_SERVERS).filter(([key]) => FRAMEWORKS.includes(key))
@@ -139,7 +145,7 @@ async function runBenchmark(type, payloadSize) {
 async function main() {
   const args = process.argv.slice(2)
   const target = args[0]
-  const sizes = ['small', 'medium', 'large', 'xlarge']
+  const sizes = SIZES 
   
   console.log('='.repeat(60))
   console.log(`BENCHMARK: ${FRAMEWORKS.join(' vs ')} - Multiple Payload Sizes`)

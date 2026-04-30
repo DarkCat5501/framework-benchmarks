@@ -1,16 +1,12 @@
 {
   "name": "benchmark-hyperin-vs-koa",
   "type": "module",
-  "scripts": {
-    "start:hyperin": "node servers/hyperin-server.js",
-    "start:koa": "node servers/koa-server.js",
-    "bench:hyperin": "node benchmark/run.js hyperin",
-    "bench:koa": "node benchmark/run.js koa"
-  },
+  "scripts": {},
   "dependencies": {
     "@elysiajs/node": "^1.4.5",
     "@koa/router": "^15.4.0",
     "elysia": "^1.4.28",
+    "fastify": "^5.0.0",
     "hyperin": "^0.0.1-beta.9",
     "koa": "^3.2.0",
     "koa-bodyparser": "^4.4.1",

@@ -14,6 +14,6 @@ app.get('/payload', (req, res) => {
 })
 
 const PORT = process.env.PORT || 3003
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`Ultimate Express server running on port ${PORT}`)
 })
