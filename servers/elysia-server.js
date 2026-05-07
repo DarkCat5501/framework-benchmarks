@@ -1,11 +1,11 @@
 import { Elysia } from "elysia";
-import { node } from "@elysiajs/node";
+// import { node } from "@elysiajs/node";
 
 import { processData, getPayload } from "../shared/payload.js";
 
 // const app = 
 new Elysia({
-    adapter: node(),
+    // adapter: node(),
     precompile: true,
   })
   .post("/process", ({ body }) => processData(body))
