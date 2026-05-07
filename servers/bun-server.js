@@ -6,7 +6,6 @@ import { $ } from 'bun';
 async function setPcoreAffinity() {
   const pid = process.pid;
   const result = await $`taskset -cp 0-4 ${pid}`.text();
-  console.log(result);
 }
 
 setPcoreAffinity();
@@ -23,8 +22,7 @@ if (process.argv[2] === 'child') {
       },
       "/payload":async (request, server) => {
         if(!request.method == "POST") return new Response(null, {status:400})
-        const body = await request.body.json();
-        const data = processData(body);
+        const data = getPayload();
         return new Response(JSON.stringify(data));
       }
     },

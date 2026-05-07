@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ALL_SERVERS = {
   node: { port: 3000, script: join(__dirname, '..', 'servers', 'node-server.js'), runtime: 'node' },
   bun: { port: 3001, script: join(__dirname, '..', 'servers', 'bun-server.js'), runtime: 'bun' },
-  hyperin: { port: 3002, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'node' },
+  hyperin: { port: 3002, script: join(__dirname, '..', 'servers', 'hyperin-server.js'), runtime: 'bun' },
   hyperinb: { port: 3003, script: join(__dirname, '..', 'servers', 'hyperin-server.bun.js'), runtime: 'bun' },
   koa: { port: 3004, script: join(__dirname, '..', 'servers', 'koa-server.js'), runtime: 'node' },
   elysia: { port: 3005, script: join(__dirname, '..', 'servers', 'elysia-server.js'), runtime: 'bun' },
